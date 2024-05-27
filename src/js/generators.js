@@ -1,31 +1,17 @@
-/**
- * Формирует экземпляр персонажа из массива allowedTypes со
- * случайным уровнем от 1 до maxLevel
- *
- * @param allowedTypes массив классов
- * @param maxLevel максимальный возможный уровень персонажа
- * @returns генератор, который при каждом вызове
- * возвращает новый экземпляр класса персонажа
- *
- */
-export function* characterGenerator(allowedTypes, maxLevel) {
-  // TODO: write logic here
-  const randomLevel = Math.floor(Math.random() * (maxLevel + 1));
-  const randomType = allowedTypes[Math.floor(Math.random() * (allowedTypes.length)) + 1];
-  return new randomType(randomLevel)
-}
+import Team from "./Team";
 
-/**
- * Формирует массив персонажей на основе characterGenerator
- * @param allowedTypes массив классов
- * @param maxLevel максимальный возможный уровень персонажа
- * @param characterCount количество персонажей, которое нужно сформировать
- * @returns экземпляр Team, хранящий экземпляры персонажей. Количество персонажей в команде - characterCount
- * */
-export function generateTeam(allowedTypes, maxLevel, characterCount) {
-  const team = characterGenerator(allowedTypes, maxLevel)
-  arrayTeam = []
-  for (let i = 0; i < characterCount.length; i++) {
-    arrayTeam.push(team.next().value)
+export function* characterGenerator(allowedTypes, maxLevel) {
+  for(let i = 0; i >= 0; i++) {
+    const randomLevel = Math.floor(Math.random() * (maxLevel) + 1);
+    const randomTypeIndex = Math.floor(Math.random() * (allowedTypes.length));
+    yield new (allowedTypes[randomTypeIndex])(randomLevel)
   }
+}
+export function generateTeam(allowedTypes, maxLevel, characterCount) {
+  const randomPerc = characterGenerator(allowedTypes, maxLevel)
+  const arrayTeam = []
+  for (let i = 0; i < characterCount; i++) {
+    arrayTeam.push(randomPerc.next().value)
+  }
+  return new Team(arrayTeam)
 }

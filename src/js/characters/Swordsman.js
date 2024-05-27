@@ -1,4 +1,4 @@
-import Character from './Character.js';
+import Character from '../Character.js';
 
 export default class Swordsman extends Character {
     constructor(level, type = "swordsman") {
